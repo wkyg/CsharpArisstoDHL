@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="GenDO">
+  <DataContextMoniker Name="/GenDODataContext" />
+  <nestedChildShapes>
+    <classShape Id="58f8fc37-4d93-4856-babd-dbe4c3c6fb5e" absoluteBounds="0.5, 3.875, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/GenDODataContext/GenerateDO_YikTing" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8ec45d2e-7f4c-41b7-91c1-f97cb51dc3de" absoluteBounds="0.51499999999999968, 4.335, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

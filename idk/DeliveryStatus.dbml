@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NEP" Class="DeliveryStatusDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=192.168.100.9\sql05;Initial Catalog=NEP;Integrated Security=True" SettingsObjectName="idk.Properties.Settings" SettingsPropertyName="NEPConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Delivery_Status_WK" Member="Delivery_Status_WKs">
+    <Type Name="Delivery_Status_WK">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SinNo" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="DeliveryComp" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="TrackingNo" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="DeliveryStatus" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

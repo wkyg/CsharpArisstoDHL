@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NEP" Class="GenDODataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=192.168.100.9\sql05;Initial Catalog=NEP;Integrated Security=True" SettingsObjectName="idk.Properties.Settings" SettingsPropertyName="NEPConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.GenerateDO_YikTing" Member="GenerateDO_YikTings">
+    <Type Name="GenerateDO_YikTing">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SinNo" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="TranCode" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="UserID" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="GeneratedDO" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="isgenerate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="isconfirm" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="isposting" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="deliverycompid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="trackingno" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="isdeleted" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
