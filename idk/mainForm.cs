@@ -498,5 +498,96 @@ namespace idk
 
             ld.Close();
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("~To find tracking number~");
+
+            OpenFileDialog ope = new OpenFileDialog();
+            ope.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+            if (ope.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+            FileStream stream = new FileStream(ope.FileName, FileMode.Open);
+            IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+            DataSet ds = excelReader.AsDataSet();
+
+            loading ld = new loading();
+            ld.Show();
+
+            int counter = 1;
+            var wb = new XLWorkbook();
+            var worksheet = wb.Worksheets.Add("ToGENDO");
+            //worksheet.Cell("A:Z").DataType = XLDataType.Text;
+            //worksheet.DataType = XLDataType.Text;
+
+            foreach (DataTable table in ds.Tables)
+            {
+                foreach (DataRow dr in table.Rows)
+                {
+                    if (table.Rows.IndexOf(dr) != 0)
+                    {
+                        string SINs = Convert.ToString(dr[1]);
+                        //MessageBox.Show(SINs);       
+                        textBox7.Text = SINs;
+
+                        WebRequest httpWebRequest = WebRequest.Create("https://api.dhlecommerce.dhl.com/rest/v3/Tracking");
+                        string json = "{\r\n    \"trackItemRequest\": {\r\n        \"hdr\": {\r\n            \"messageType\": \"TRACKITEM\",\r\n            \"accessToken\": \"" + textBox5.Text + "\",\r\n            \"messageDateTime\": \"2021-04-23T17:13:10+08:00\",\r\n            \"messageVersion\": \"1.0\",\r\n            \"messageLanguage\": \"en\"\r\n        },\r\n        \"bd\": {       \r\n            \"customerAccountId\": null,     \r\n            \"soldToAccountId\": null,\r\n            \"pickupAccountId\": null,\r\n            \"ePODRequired\": \"N\",\r\n            \"trackingReferenceNumber\": [\r\n                \"" + "MYCGU" + SINs + "\"\r\n            ]\r\n        }\r\n    }\r\n}";
+
+                        httpWebRequest.ContentType = "application/json";
+                        httpWebRequest.Method = "POST";
+
+                        using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                        {
+                            streamWriter.Write(json);
+                            streamWriter.Flush();
+                            streamWriter.Close();
+                        }
+
+                        HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                        using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            string result = streamReader.ReadToEnd();
+                            //Console.WriteLine(result);
+
+                            try
+                            {
+                                string jsonTrck = JObject.Parse(result)["trackItemResponse"]["bd"]["shipmentItems"][0]["trackingID"].ToString();
+
+                                textBox6.Text = jsonTrck;
+                                string cut = SINs.Substring(0, 17);
+                                worksheet.Cell(counter, 1).SetValue(cut);   //write sins
+                                worksheet.Cell(counter, 2).SetValue("DHL eCommerce");   //delivery comp
+                                worksheet.Cell(counter, 3).SetValue("NTW2");   //location
+                                worksheet.Cell(counter, 4).SetValue("MY8_ARISSTO");   //userID
+                                worksheet.Cell(counter, 5).SetValue("DOAPI" + textBox8.Text);   //batch
+                                worksheet.Cell(counter, 6).SetValue(jsonTrck);   //tracking num
+                            }
+                            catch (Exception ex)
+                            {
+                                errorForm ef = new errorForm();
+                                ef.ShowDialog();
+                                MessageBox.Show(ex.ToString());
+                            }
+                        }
+
+                        Console.WriteLine(SINs);   //debug line
+                        Console.WriteLine(counter);   //debug line                        
+
+                        counter++;
+                    }
+                }
+            }
+
+            Console.WriteLine(textBox8.Text);
+            wb.SaveAs("C:\\Users\\WYCHIN\\Desktop\\YONG_TEMP\\TestC#\\Mapp" + textBox8.Text + ".xlsx");
+            excelReader.Close();
+            stream.Close();
+            MessageBox.Show("File saved at: \n C:\\Users\\WYCHIN\\Desktop\\YONG_TEMP\\TestC#\\Mapp" + textBox8.Text + ".xlsx");
+            ld.Close();
+
+            sinNo_DHL = textBox7.Text;
+        }
     }
 }
